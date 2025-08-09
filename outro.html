@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo | Planos de Saúde</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cor-fundo: #e6f4f1;
+            --cor-destaque: #007f73;
+            --cor-texto: #2d3436;
+            --cor-branca: #ffffff;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: var(--cor-fundo);
+            min-height: 100vh;
+        }
+        
+        .welcome-container {
+            padding: 2rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: var(--cor-destaque);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            color: var(--cor-texto);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+        
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, auto);
+            gap: 2rem;
+            padding: 1rem;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+        
+        .logo-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 4px solid var(--cor-branca);
+            background-color: var(--cor-branca);
+            position: relative;
+        }
+        
+        /* SOMBRAS PERSONALIZADAS PARA CADA CÍRCULO */
+        .logo-circle[onclick*="medsenior"] {
+            box-shadow: 0 0 15px 5px rgba(55, 119, 61, 0.4);
+        }
+        
+        .logo-circle[onclick*="hapvida"] {
+            box-shadow: 0 0 15px 5px rgba(0, 91, 169, 0.4);
+        }
+        
+        .logo-circle[onclick*="quality"] {
+            box-shadow: 0 0 15px 5px rgba(239, 51, 64, 0.4);
+        }
+        
+        .logo-circle[onclick*="sulamerica"] {
+            box-shadow: 0 0 15px 5px rgba(0, 0, 102, 0.4);
+        }
+        
+        .logo-circle[onclick*="bradesco"] {
+            box-shadow: 0 0 15px 5px rgba(128, 0, 0, 0.4);
+        }
+        
+        .logo-circle[onclick*="unimed"] {
+            box-shadow: 0 0 15px 5px rgba(0, 153, 93, 0.4);
+        }
+        
+        .logo-circle[onclick*="amil"] {
+            box-shadow: 0 0 15px 5px rgba(0, 0, 128, 0.4);
+        }
+        
+        .logo-circle[onclick*="unity"] {
+            box-shadow: 0 0 15px 5px rgba(0, 48, 101, 0.4);
+        }
+        
+        .logo-circle[onclick*="outro"] {
+            box-shadow: 0 0 15px 5px rgba(128, 0, 128, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #800080;
+        }
+        
+        .logo-circle:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .logo-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        
+        .logo-name {
+            font-weight: 600;
+            color: var(--cor-texto);
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        
+        /* Animação de transição com degradê dinâmico */
+        .transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            clip-path: circle(0% at 50% 50%);
+            animation: expandCircle 0.8s forwards;
+            display: none;
+            background: linear-gradient(135deg, #007346 0%, #00A859 100%);
+        }
+        
+        /* Estilos para a página do formulário */
+        .form-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-container h2 {
+            color: var(--cor-destaque);
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        .btn {
+            background-color: var(--cor-destaque);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #00665a;
+        }
+        
+        @keyframes expandCircle {
+            to {
+                clip-path: circle(150% at 50% 50%);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .logo-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(4, auto);
+                max-width: 400px;
+                gap: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <h1>Bem-vindo!</h1>
+        <p class="subtitle">Escolha o seu plano de saúde:</p>
+        
+        <div class="logo-grid">
+            <!-- MedSenior -->
+            <div class="logo-item">
+                <div class="logo-circle" onclick="redirectToPlan('medsenior', ['rgb(55, 119, 61)', '#62d43f'])">
+                    <img src="medseniorcirc.jpg" alt="MedSenior">
+                </div>
+                <span class="logo-name">MedSênior</span>
+            </div>
+            
+            <!-- Hapvida -->
+            <div class="logo-item">
+                <div class="logo-circle" onclick="redirectToPlan('hapvida', ['rgb(0, 91, 169)', 'rgb(0, 91, 169)'])">
+                    <img src="hapvidacirc.jpg" alt="Hapvida">
+                </div>
+                <span class="logo-name">Hapvida</span>
+            </div>
+            
+            <!-- Quality -->
+            <div class="logo-item">
+                <div class="logo-circle" onclick="redirectToPlan('quality', ['#EF3340','#FA8072'])">
+                    <img src="qualitycirc.jpg" alt="Quality">
+                </div>
+                <span class="logo-name">Quality</span>
+            </div>
+            
+            <!-- SulAmérica -->
+            <div class="logo-item">
+                <div class="logo-circle" onclick="redirectToPlan('sulamerica', ['rgb(0, 0, 102)', '#054f77'])">
+                    <img src="sulamericacirc.jpg" alt="SulAmérica">
+                </div>
+                <span class="logo-name">SulAmérica</span>
+            </div>
+
+            <!-- Bradesco -->
+            <div class="logo-item">
+                <div class="logo-circle" onclick="redirectToPlan('bradesco', ['#800000', '#FF0000'])">
+                    <img src="bradescocirc.jpg" alt="Bradesco">
+                </div>
+                <span class="logo-name">Bradesco</span>
+            </div>
+
+            <!-- Unimed -->
+            <div class="logo-item">
+                <div class="logo-circle" onclick="redirectToPlan('unimed', ['#00995D', '#00C853'])">
+                    <img src="unimedcirc.jpg" alt="Unimed">
+                </div>
+                <span class="logo-name">Unimed</span>
+            </div>
+
+            <!-- Amil -->
+            <div class="logo-item">
+                <div class="logo-circle" onclick="redirectToPlan('amil', ['#000080', '#0000ff'])">
+                    <img src="amilcirc.jpg" alt="Amil">
+                </div>
+                <span class="logo-name">Amil</span>
+            </div>
+
+            <!-- Outro -->
+            <div class="logo-item">
+                <div class="logo-circle" onclick="redirectToForm()">
+                    OUTRO
+                </div>
+                <span class="logo-name">Outro</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay para animação -->
+    <div id="transitionOverlay" class="transition-overlay"></div>
+
+    <!-- Formulário de contato (inicialmente oculto) -->
+    <div id="contactForm" style="display: none;">
+        <div class="form-container">
+            <h2>Fale Conosco</h2>
+            <form id="form-contato" action="https://formsubmit.co/plansaudelider@gmail.com" method="POST">
+                <input type="hidden" name="_next" value="https://www.medseniorsaude.com.br/obrigado.html" />
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_template" value="table" />
+                <input type="hidden" name="_subject" value="Novo contato do site" />
+
+                <div class="form-group">
+                    <input type="text" id="nome" name="nome" placeholder="Seu nome" required />
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder="Seu e-mail" required />
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="telefone" name="telefone" placeholder="Seu telefone com DDD" required />
+                </div>
+                <div class="form-group">
+                    <textarea id="mensagem" name="mensagem" placeholder="Sua mensagem" required></textarea>
+                </div>
+                <button type="submit" class="btn">Enviar Mensagem</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function redirectToPlan(plano, cores) {
+            const overlay = document.getElementById('transitionOverlay');
+            
+            // Cria o degradê com as cores específicas
+            overlay.style.background = `linear-gradient(135deg, ${cores[0]} 0%, ${cores[1]} 100%)`;
+            
+            overlay.style.display = 'block';
+            
+            setTimeout(() => {
+                window.location.href = `${plano}.html`;
+            }, 500);
+        }
+        
+        function redirectToForm() {
+            const overlay = document.getElementById('transitionOverlay');
+            const welcomeContainer = document.querySelector('.welcome-container');
+            const contactForm = document.getElementById('contactForm');
+            
+            // Configura o overlay com cores roxas para combinar com o botão OUTRO
+            overlay.style.background = `linear-gradient(135deg, #800080 0%, #BA55D3 100%)`;
+            overlay.style.display = 'block';
+            
+            setTimeout(() => {
+                // Oculta o conteúdo principal e mostra o formulário
+                welcomeContainer.style.display = 'none';
+                contactForm.style.display = 'block';
+                overlay.style.display = 'none';
+            }, 500);
+        }
+    </script>
+</body>
+</html>
